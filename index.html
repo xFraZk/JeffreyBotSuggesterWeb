@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JG Suggester - Verificación de Código</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<script>
+		// Generar array de códigos
+		var codigos = [
+			"f9g2k6d5h1",
+			"p8r5t3w2q7",
+			"z6x9c8v1b",
+			"m7n2j1k8l6",
+			"s5d2f7g3h9",
+			"q1w9e2r8t4",
+			"u5i8o3p1a7",
+			"y6t4r8e9w1",
+			"l7k3j2h1g6"
+		];
+
+		// Obtener el número de intentos guardado en localStorage, o 0 si no hay nada
+		var num_intentos = localStorage.getItem("num_intentos") || 0;
+
+		// Verificar si se han agotado los intentos
+		if (num_intentos >= 10) {
+			document.getElementById("codigo").style.display = "none"; // Ocultar el código
+			document.getElementById("intentos").style.display = "none"; // Ocultar el número de intentos
+			document.getElementById("error").style.display = "block"; // Mostrar el mensaje de error
+			localStorage.removeItem("num_intentos"); // Remover la cantidad de intentos para permitir que se intente de nuevo más tarde
+		}
+
+		// Obtener un código aleatorio del array si no se han agotado los intentos
+		var codigo_aleatorio = "";
+
+				if (num_intentos < 10) {
+			codigo_aleatorio = codigos[Math.floor(Math.random() * codigos.length)];
+			localStorage.setItem("codigo_correcto", codigo_aleatorio); // Guardar el código correcto en localStorage
+		}
+
+		// Función para verificar el código ingresado por el usuario
+		function verificarCodigo() {
+			var codigo_ingresado = document.getElementById("codigo_ingresado").value;
+			var codigo_correcto = localStorage.getItem("codigo_correcto");
+
+			// Comparar el código ingresado con el código correcto
+			if (codigo_ingresado === codigo_correcto) {
+				var codigos = ['f9g2k6d5h1', 'p8r5t3w2q7', 'z6x9c8v1b', 'm7n2j1k8l6', 's5d2f7g3h9', 'q1w9e2r8t4', 'u5i8o3p1a7', 'y6t4r8e9w1', 'l7k3j2h1g6', 'b2n6m1v8c4'];
+				var codigoAleatorio = codigos[Math.floor(Math.random() * codigos.length)];
+				prompt('¡Código correcto! Bienvenido a JG Suggester. Ingresa este código que se mostrará en pantalla; ingresando el comando /verificacion.\n\n' + codigoAleatorio + '\n\nPulsa Ctrl+C o Command+C para copiar el código.', codigoAleatorio);
+
+				localStorage.removeItem("num_intentos"); // Reiniciar el número de intentos
+				location.reload(); // Recargar la página para obtener un nuevo código
+			} else {
+				alert("Código incorrecto. Inténtalo de nuevo.");
+				num_intentos++;
+				localStorage.setItem("num_intentos", num_intentos); // Guardar el número de intentos en localStorage
+				document.getElementById("intentos").innerHTML = num_intentos + " / 10"; // Actualizar el número de intentos en el HTML
+				if (num_intentos >= 10) {
+					document.getElementById("codigo").style.display = "none"; // Ocultar el código
+					document.getElementById("intentos").style.display = "none"; // Ocultar el número de intentos
+					document.getElementById("error").style.display = "block"; // Mostrar el mensaje de error
+					localStorage.removeItem("num_intentos"); // Remover la cantidad de intentos para permitir que se intente de nuevo más tarde
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="background"></div>
+<div class="container">
+		<h1>JG Suggester</h1>
+		<p>Ingresa el siguiente código para acceder:</p>
+		<div id="codigo">
+			<p><span id="codigo_correcto"></span></p>
+		</div>
+		<div id="intentos">
+			<p>Intentos restantes: <span id="intentos_restantes"></span></p>
+		</div>
+		<input type="text" id="codigo_ingresado" placeholder="Ingresa el código aquí">
+		<br>
+		<button class="btn" onclick="verificarCodigo()">Verificar Código</button>
+		<div id="error" class="error" style="display: none;">
+			<p>Lo siento, has alcanzado el número máximo de intentos.</p>
+		</div>
+	</div>
+	
+	<footer>
+		<p>El método de verificación JG Suggester es una herramienta que se utiliza para comprobar que una persona está interactuando con un sistema o aplicación en línea y no un robot o programa automatizado. Este método consiste en proporcionar al usuario un código único y aleatorio que debe ser ingresado en un campo de texto específico. El usuario debe ingresar el código correctamente para completar la verificación y acceder a la funcionalidad completa del sistema o aplicación en línea. De esta manera, JG Suggester asegura que solo los humanos tengan acceso a la funcionalidad del sistema o aplicación, lo que ayuda a prevenir el spam, el fraude y otros tipos de actividades maliciosas.</p>
+	</footer>
+</body>
+</html>
+
+<script>
+	// Mostrar el código aleatorio en el HTML
+	document.getElementById("codigo_correcto").innerHTML = codigo_aleatorio;
+
+	// Mostrar el número de intentos restantes en el HTML
+	document.getElementById("intentos_restantes").innerHTML = (10 - num_intentos) + " / 10";
+</script>
+
+	
